@@ -13,7 +13,7 @@
         app:errorEnabled="false">
 
         <EditText
-            android:id="@+id/city_name_edit_text"
+            android:id="@+id/etCityName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/city_name"

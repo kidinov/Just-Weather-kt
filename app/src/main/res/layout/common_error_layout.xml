@@ -27,7 +27,7 @@
         android:textSize="@dimen/text_body" />
 
     <Button
-        android:id="@+id/retry_button"
+        android:id="@+id/btnRetry"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

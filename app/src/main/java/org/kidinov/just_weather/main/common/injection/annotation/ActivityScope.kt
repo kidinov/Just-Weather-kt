@@ -1,8 +1,9 @@
 package org.kidinov.just_weather.main.common.injection.annotation
 
 
-import javax.inject.Qualifier
+import javax.inject.Scope
 
-@Qualifier
-@Retention(AnnotationRetention.RUNTIME)
+
+@Scope
+@Retention
 annotation class ActivityScope

@@ -16,7 +16,7 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/pic_image_view"
+            android:id="@+id/ivPic"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginLeft="@dimen/default_margin"
@@ -25,7 +25,7 @@
             tools:src="@drawable/ic_01n"/>
 
         <TextView
-            android:id="@+id/location_name_text_view"
+            android:id="@+id/tvLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -38,7 +38,7 @@
             tools:text="Amsterdam/NL"/>
 
         <TextView
-            android:id="@+id/temperature_text_view"
+            android:id="@+id/tvTemperature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -49,7 +49,7 @@
             tools:text="11°"/>
 
         <TextView
-            android:id="@+id/date_text_view"
+            android:id="@+id/tvDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"

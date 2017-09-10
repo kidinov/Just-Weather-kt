@@ -1,17 +1,21 @@
 package org.kidinov.just_weather.main.common.injection.module
 
 
-import com.squareup.moshi.Moshi
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.kidinov.just_weather.BuildConfig
+import org.kidinov.just_weather.main.common.injection.annotation.Remote
 import org.kidinov.just_weather.main.common.remote.ServerInterface
 import org.kidinov.just_weather.main.util.remote.ApiKeyRequestInterceptor
+import org.kidinov.just_weather.main.weather.model.WeatherDataSource
+import org.kidinov.just_weather.main.weather.model.WeatherRemoteDataSource
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
-import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -21,6 +25,13 @@ class RemoteDataSourceModule {
     private val API_KEY = "e746ffbb6021d1959acd9a5bc1986685"
     private val UNITS = "metric"
 
+    @Singleton
+    @Provides
+    @Remote
+    internal fun provideRemoteWeatherDataSource(serverInterface: ServerInterface): WeatherDataSource {
+        return WeatherRemoteDataSource(serverInterface)
+    }
+
     @Provides
     @Singleton
     internal fun provideOkHttpClient(): OkHttpClient {
@@ -29,14 +40,15 @@ class RemoteDataSourceModule {
 
     @Provides
     @Singleton
-    internal fun provideServerInterface(moshi: Moshi, okHttpClient: OkHttpClient): ServerInterface {
-        return getServerInterface(getRetrofit(moshi, okHttpClient))
+    internal fun provideServerInterface(gsoni: Gson, okHttpClient: OkHttpClient): ServerInterface {
+        return getServerInterface(getRetrofit(gsoni, okHttpClient))
     }
 
     @Provides
     @Singleton
-    internal fun provideMoshi(): Moshi {
-        return Moshi.Builder().build()
+    internal fun getGson(): Gson {
+        return GsonBuilder()
+                .create()
     }
 
     @Provides
@@ -45,11 +57,11 @@ class RemoteDataSourceModule {
         return apiKeyRequestInterceptor
     }
 
-    fun getRetrofit(gson: Moshi, okHttpClient: OkHttpClient): Retrofit {
+    fun getRetrofit(gson: Gson, okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .addConverterFactory(MoshiConverterFactory.create(gson))
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(okHttpClient)
                 .build()
     }
