@@ -5,12 +5,12 @@ apply plugin: "kotlin-kapt"
 apply plugin: 'realm-android'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.1"
+    compileSdkVersion 27
+    buildToolsVersion "27.0.3"
     defaultConfig {
         applicationId "org.kidinov.just_weather"
         minSdkVersion 21
-        targetSdkVersion 26
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -20,6 +20,11 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
     }
 
     androidExtensions {
@@ -32,17 +37,18 @@ android {
 }
 
 dependencies {
-    def SUPPORT_LIB_VERSION = '26.0.2'
+    def SUPPORT_LIB_VERSION = '27.1.0'
     def RETROFIT_VERSION = "2.3.0"
     def RX_JAVA_VERSION = '2.1.2'
-    def DAGGER_VERSION = '2.11'
     def ANKO_VERSION = "0.10.1"
+    def ARCH_COMPONENTS_VERSION = "1.1.1"
+    def KOIN_VERSION = '0.9.1'
 
     //NETWORK
     implementation "com.squareup.retrofit2:retrofit:" + RETROFIT_VERSION
     implementation "com.squareup.retrofit2:converter-gson:" + RETROFIT_VERSION
     implementation 'com.squareup.retrofit2:adapter-rxjava2:' + RETROFIT_VERSION
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
 
     //ANDROID
     implementation "com.android.support:appcompat-v7:" + SUPPORT_LIB_VERSION
@@ -52,27 +58,20 @@ dependencies {
     implementation "com.android.support:design:" + SUPPORT_LIB_VERSION
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
 
+    //ARCH COMP
+    implementation "android.arch.lifecycle:extensions:" + ARCH_COMPONENTS_VERSION
+    implementation "android.arch.lifecycle:reactivestreams:" + ARCH_COMPONENTS_VERSION
+
     //DI
-    implementation 'com.google.dagger:dagger:' + DAGGER_VERSION
-    kapt 'com.google.dagger:dagger-compiler:' + DAGGER_VERSION
+    implementation 'org.koin:koin-android-architecture:' + KOIN_VERSION
+    implementation 'org.koin:koin-core:' + KOIN_VERSION
 
     //UTILS
     implementation 'io.reactivex.rxjava2:rxjava:' + RX_JAVA_VERSION
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    implementation 'com.github.ajalt:timberkt:1.3.0'
-    implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.3@aar'
-    implementation 'com.patloew.rxlocation:rxlocation:1.0.3'
-
+    implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.4@aar'
+    implementation 'com.patloew.rxlocation:rxlocation:1.0.4'
+    implementation 'com.jakewharton.timber:timber:4.6.1'
     implementation "org.jetbrains.anko:anko-commons:" + ANKO_VERSION
-    implementation "org.jetbrains.anko:anko-design:" + ANKO_VERSION
-    implementation "org.jetbrains.anko:anko-sdk15-listeners:" + ANKO_VERSION
-    implementation "org.jetbrains.anko:anko-sdk15:" + ANKO_VERSION
-
-    testImplementation 'junit:junit:4.12'
-
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.1', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 }
